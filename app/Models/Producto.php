@@ -15,6 +15,7 @@ class Producto extends Model
         'precio_venta',
         'tipo',
         'descripcion',
+        'imagen',
         'eliminado',
         'categoria_id'
     ];

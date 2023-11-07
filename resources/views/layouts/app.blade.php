@@ -4,10 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/4c2bc02174.js" crossorigin="anonymous"></script>
+    @stack('styles')
+
     <title>ProyectoERP - @yield('titulo')</title>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 
+
+    <script src="https://kit.fontawesome.com/4c2bc02174.js" crossorigin="anonymous"></script>
 
 </head>
 

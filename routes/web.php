@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\AlmacenController;
-use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\CompraController;
-use App\Http\Controllers\EmpresaController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\ProveedorController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SuscripcionController;
-use App\Http\Controllers\SucursalController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CompraController;
+use App\Http\Controllers\ImagenController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\AlmacenController;
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SucursalController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\SuscripcionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,7 @@ Route::get('/compra',[CompraController::class,'index'])->name('compras.index');
 Route::get('/compra/create',[CompraController::class,'create'])->name('compras.create');
 Route::post('/compra/store',[CompraController::class,'store'])->name('compras.store');
 
+Route::post('/imagenes',[ImagenController::class,'store'])->name('imagenes.store');
+Route::delete('/imagenes/{nombre}',[ImagenController::class,'destroy'])->name('imagenes.destroy');
 
-Route::get('/suscripciones',[SuscripcionController::class,'index'])->name('suscripciones');
-Route::post('/procesar-pago',[SuscripcionController::class,'procesarPago'])->name('procesar-pago');
+

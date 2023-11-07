@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('precio_venta');
             $table->string('tipo');
             $table->string('descripcion');
+            $table->string('imagen');
             $table->boolean('eliminado');
             $table->unsignedBigInteger('categoria_id');
             $table->timestamps();

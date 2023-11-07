@@ -36,7 +36,9 @@ class ProductoController extends Controller
         //
         $this->validate($request, [
             'nombre' => 'required|max:30',
-            'tipo' => 'required'
+            'tipo' => 'required',
+            'descripcion' => 'required',
+            'imagen' => 'required',
         ]);
 
         $categoria_id = $request->categoria_id;
@@ -67,6 +69,7 @@ class ProductoController extends Controller
         $productos->precio_venta = 0;
         $productos->tipo = $request->tipo;
         $productos->descripcion = $request->descripcion;
+        $productos->imagen =$request->imagen;
         $productos->categoria_id = $categoria_id;
         $productos->eliminado = false;
         $productos->save();
