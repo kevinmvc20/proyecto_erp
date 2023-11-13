@@ -7,31 +7,22 @@ use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
-        //
         $categorias = Categoria::all();
         return view('producto.categoria.index',['categorias'=>$categorias]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
-        //
         return view('producto.categoria.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
-        //
         $this->validate($request, [
             'nombre' => 'required|max:30|unique:categorias',
         ]);

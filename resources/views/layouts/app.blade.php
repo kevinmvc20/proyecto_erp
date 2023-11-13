@@ -19,9 +19,11 @@
     @auth
         <header class=" p-5  bg-gradient-to-b from-sky-800 to-sky-600 shadow">
             <div class="mx-auto flex justify-between items-center">
-                <h1 class="text-3xl font-black">
-                    ProyectoERP
-                </h1>
+                <a href="{{ route('posts.index') }}">
+                    <h1 class="text-3xl font-black">
+                        ProyectoERP
+                    </h1>
+                </a>
 
 
                 <nav class="flex gap-2 items-center">
@@ -107,7 +109,7 @@
                         <li class="hover:bg-sky-200  hover:text-sky-700 py-2 pl-10 transition duration-200"><a
                                 href="{{ route('proveedores.index') }}">Proveedores</a></li>
                         <li class="hover:bg-sky-200 hover:text-sky-700 py-2 pl-10 transition duration-200"><a
-                                href="#">Opción 2</a></li>
+                                href="{{ route('compras.index') }}">Compras</a></li>
                         <!-- Agrega más opciones según sea necesario -->
                     </ul>
 

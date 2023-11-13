@@ -37,12 +37,14 @@ class SucursalController extends Controller
         $this->validate($request, [
             'direccion' => 'required',
             'encargado' => 'required|max:30',
+            'nombre' => 'required|max:30',
             'empresa_id' => 'required',
         ]);
 
         $sucursales = new Sucursal();
         $sucursales->encargado = $request->encargado;
         $sucursales->empresa_id = $request->empresa_id;
+        $sucursales->nombre = $request->nombre;
         $sucursales->direccion = $request->direccion;
         $sucursales->eliminado = false;
         $sucursales->save();

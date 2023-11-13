@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
-            $table->integer('cantidad');
+            
             $table->string('estado');
             $table->date('fecha');
-            $table->decimal('importe_iva');
-            $table->decimal('precio');
+            
+            
+            $table->decimal('total');
             $table->string('tipo_pago');
             $table->boolean('eliminado');
             $table->unsignedBigInteger('proveedor_id');
             $table->unsignedBigInteger('user_id');
+            
             $table->timestamps();
 
             $table->foreign('proveedor_id')->on('proveedores')->references('id')->onDelete('cascade');

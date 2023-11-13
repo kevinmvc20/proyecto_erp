@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('sucursales', function (Blueprint $table) {
             $table->id();
             $table->string('direccion');
+            $table->string('nombre');
             $table->string('encargado');
             $table->boolean('eliminado');
             $table->unsignedBigInteger('empresa_id');

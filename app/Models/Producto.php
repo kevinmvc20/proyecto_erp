@@ -24,6 +24,10 @@ class Producto extends Model
         return $this->belongsTo(Categoria::class,'categoria_id');
     }
 
+    public function Compraproducto(){
+        return $this->hasMany(Compraproducto::class,'producto_id');
+    }
+
     public function ProductoAlmacen(){
         return $this->hasMany(Productoalmacen::class,'producto_id');
     }

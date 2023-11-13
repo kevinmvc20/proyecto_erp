@@ -20,6 +20,7 @@
                 @csrf
             </form>
         </div>
+
         <div class="md:w-1/2 p-10 bg-white rounded-lg shadow-xl mt-10 md:mt-0">
             <form action="{{ route('productos.store') }}" method="POST" autocomplete="off">
                 @csrf

@@ -3,67 +3,126 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
+use App\Models\Compraproducto;
+use App\Models\Producto;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 
 class CompraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
-        $compras = Compra::all();
-        return view('compra.compra.index');
+        $compras = Compra::with('user','proveedor')->get();
+        return view('compra.compra.index',['compras'=>$compras]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
-        return view('compra.compra.create');
+        $proveedores = Proveedor::all();
+        $productos = Producto::all();
+
+        return view('compra.compra.create',['proveedores'=>$proveedores,'productos'=> $productos]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
-        $compras = new Compra();
-        $compras->cantidad= $request->cantidad;
-        $compras->estado = $request->estado;
-        $compras->fecha = $request->fecha;
-        $compras->importe_iva = $request->importe_iva;
-        $compras->precio = $request->precio;
-        $compras->tipo_pago = $request->tipo_pago;
-        $compras->eliminado = false;
-        $compras->save();
+
+        // Crear una nueva instancia de Compra
+        $compra = new Compra();
+        
+        $compra->estado = $request->estado;
+        $compra->fecha = $request->fecha;
+        $compra->tipo_pago = $request->tipo_pago;
+        $compra->total = $request->total_pagar;
+        $compra->eliminado = false;
+
+        // Obtener el ID del proveedor o crear uno nuevo si es necesario
+        $proveedor_id = $request->proveedor_id;
+        $nombre_proveedor = $request->nombre_proveedor;
+
+        if (empty($proveedor_id) && !empty($nombre_proveedor)) {
+            $proveedorExistente = Proveedor::where('nombre', $nombre_proveedor)->first();
+
+            if ($proveedorExistente) {
+                return redirect()->route('compras.create')->with('error', 'El proveedor ya existe en la base de datos.');
+            }
+
+            //Si el proveedor no existe en la base de datos se lo crea
+
+            $proveedor = new Proveedor();
+            $proveedor->nombre = $nombre_proveedor;
+            $proveedor->email = $request->email;
+            $proveedor->direccion = "sin registrar";
+            $proveedor->nit = $request->nit;
+            $proveedor->telefono = 0;
+            $proveedor->eliminado = false;
+            $proveedor->save();
+            $proveedor_id = $proveedor->id;
+        }
+
+        // Asignar los valores al modelo Compra
+        $compra->proveedor_id = $proveedor_id;
+        $compra->user_id = auth()->user()->id;
+        $productos = json_decode($request->productos);
+
+        // Guardar la compra en la base de datos
+        $compra->save();
+
+        // dd($request->productos);
+
+        // Ahora, guarda los detalles de los productos en la tabla intermedia (CompraDetalle)
+        foreach ($productos as $producto) {
+            $compraproducto = new Compraproducto();
+            $compraproducto->cantidad = $producto->cantidad;
+            $compraproducto->precio = $producto->precio;
+            $compraproducto->importe_iva = $producto->importeIva;
+            $compraproducto->producto_id = $producto->id;
+            $compraproducto->eliminado = false;
+            $compraproducto->compra_id = $compra->id; // Asocia el detalle con la compra creada
+            $compraproducto->save();
+        }
 
         return redirect()->route('compras.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+
+
+
+    public function show($id)
     {
-        //
+        $compra = Compra::with('Proveedor', 'User', 'Compraproducto')->find($id);
+
+        if (!$compra) {
+            return redirect()->route('compras.index')->with('error', 'Compra no encontrada.');
+        }
+
+        return view('compra.compra.show', compact('compra'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    
+    public function edit($id)
     {
-        //
+        $compra = Compra::with('Proveedor','User','Compraproducto')->find($id);
+
+        return view('compra.compra.edit',compact('compra'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    
+    public function update(Request $request,$id)
     {
-        //
+        
+
+        // Crear una nueva instancia de Compra
+        $compra = Compra::findOrFail($id);
+        
+        $compra->estado = $request->estado;
+        $compra->save();
+    
+        return redirect()->route('compras.index');
     }
 
     /**

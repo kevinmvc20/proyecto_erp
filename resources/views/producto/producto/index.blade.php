@@ -2,7 +2,7 @@
 
 
 @section('titulo')
-    Pagina Principal
+    Pagina Producto
 @endsection
 
 
@@ -24,7 +24,7 @@
                         <th class="px-4 py-2 bg-blue-500">Precio Venta</th>
                         <th class="px-4 py-2 bg-blue-500">Tipo</th>
                         <th class="px-4 py-2 bg-blue-500">Imagen</th>
-                        <th class="px-4 py-2 bg-blue-500">Descripcion</th>
+                        {{-- <th class="px-4 py-2 bg-blue-500">Descripcion</th> --}}
                         <th class="px-4 py-2 bg-blue-500">Categoria</th>
                         <th class="px-4 py-2 bg-blue-500">Opciones</th>
                     </tr>
@@ -43,11 +43,13 @@
                                         alt="Imagen del producto{{ $producto->nombre }}">
                                 </a>
                             </td>
-                            <td class="px-4 py-2 text-center">{{ $producto->descripcion }}</td>
+                            {{-- <td class="px-4 py-2 text-center">{{ $producto->descripcion }}</td> --}}
                             <td class="px-4 py-2 text-center">{{ $producto->categoria->nombre }}</td>
                             <td class="px-4 py-2 text-center">
-                                <button type="submit" class="bg-green-500 text-white p-2 rounded mb-2">Ver</button>
-                                <button type="reset" class=" bg-red-500 text-white p-2 rounded mb-2">Eliminar</button>
+                                <a href="{{ route('productos.show', ['id' => $producto->id]) }}"
+                                    class="bg-green-500 text-white p-2 rounded mb-2 ">Ver</a>
+                                <button type="reset"
+                                    class=" bg-red-500 text-white mt-2 p-2 rounded mb-2">Eliminar</button>
                             </td>
                         </tr>
                     @endforeach

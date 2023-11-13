@@ -19,4 +19,8 @@ class Proveedor extends Model
         'telefono',
         'eliminado'
     ];
+
+    public function Compra(){
+        return $this->hasMany(Compra::class,'proveedor_id');
+    }
 }
